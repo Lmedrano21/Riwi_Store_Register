@@ -1,5 +1,3 @@
-
-
 def record_sales2(): #This funcition only catch the variables, doesn't make the historial's record sales
     try:    
         print("Sales recorded successfully.")
