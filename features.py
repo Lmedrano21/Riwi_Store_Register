@@ -1,10 +1,67 @@
+def validate_input_product_name(user_input):
+    while user_input.strip() == "":
+        print("ERROR: Product name cannot be empty. Please enter a valid product name.")
+        user_input = input("Enter the name of the product: ")
+    return user_input.strip()
+
+def validate_input_price(user_input):
+    validate =True
+    while True:
+        try:
+            price = float(user_input)
+            if price < 0:
+                print("ERROR: Price cannot be negative. Please enter a valid price.")
+                user_input = input("Enter the price of the product: ")
+            elif price == 0:
+                print("ERROR: Price cannot be zero. Please enter a valid price.")
+                user_input = input("Enter the price of the product: ")
+            elif price == "":
+                print("ERROR: Price cannot be empty. Please enter a valid price.")
+                user_input = input("Enter the price of the product: ") 
+            else:
+                validate = False
+                return price
+        except ValueError:
+            print("ERROR: Please enter a valid numeric value for price.")
+            user_input = input("Enter the price of the product: ")
+                   
+def validate_input_quantity(user_input):
+    validate = True
+    while validate:
+        try:
+            quantity = int(user_input)
+            if quantity < 0:
+                print("ERROR: Quantity cannot be negative. Please enter a valid quantity.")
+                user_input = input("Enter the quantity sold: ")
+            elif quantity == 0:
+                print("ERROR: Quantity cannot be zero. Please enter a valid quantity.")
+                user_input = input("Enter the quantity sold: ")
+            elif quantity == "":
+                print("ERROR: Quantity cannot be empty. Please enter a valid quantity.")
+                user_input = input("Enter the quantity sold: ")
+            elif quantity is type(None):
+                print("ERROR: Quantity cannot be None. Please enter a valid quantity.")
+                user_input = input("Enter the quantity sold: ")
+            elif quantity == type(float):
+                print("ERROR: Quantity must be an integer. Please enter a valid quantity.")
+                user_input = input("Enter the quantity sold: ")
+            else:
+                validate = False
+                return quantity
+        except ValueError:
+            print("ERROR: Please enter a valid numeric value for quantity.")
+            user_input = input("Enter the quantity sold: ")                 
+                   
 def record_sales2(): #This funcition only catch the variables, doesn't make the historial's record sales
     try:    
         print("Sales recorded successfully.")
         record_sales = {}
         producto_name = input("Enter the name of the product: ")
-        Producto_price = float(input("Enter the price of the product: "))
-        quantity = int(input("Enter the quantity sold: "))
+        producto_name = validate_input_product_name(producto_name)
+        Producto_price = input("Enter the price of the product: ")
+        Producto_price = validate_input_price(Producto_price)
+        quantity = input("Enter the quantity sold: ")
+        quantity = validate_input_quantity(quantity)
 
         total_sale = Producto_price * quantity
         record_sales[producto_name] = {
@@ -15,7 +72,6 @@ def record_sales2(): #This funcition only catch the variables, doesn't make the 
         return record_sales
     except ValueError:
         print("ERROR: Please enter valid numeric values for price and quantity.")
-
 
 def record_sales_print():
     validate_record = True
