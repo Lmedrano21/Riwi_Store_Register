@@ -21,10 +21,12 @@ def menu():
         elif Ejecucion == 2:
             features_.inventory_print()
         elif Ejecucion == 3:
-            print("Calculate statistics")
+            features_.calculate_statistics()
         elif Ejecucion == 4:
-            print("Exit")
+            print("-----------------------------------------------")
+            print("Thanks for using our system! Have a great day!")
+            print("-----------------------------------------------")
+            validator =  False
         else:
             print("Option not valid")
 
-menu()

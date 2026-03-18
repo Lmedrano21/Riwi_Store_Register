@@ -87,3 +87,18 @@ def inventory_print():
     print("---------------------------------------------------------")
     print("Exiting the inventory management system.")
     return
+def calculate_statistics():
+    global total, products_added
+    total = 0
+    products_added = 0
+    product_added = {}
+    product_added.update(inventory)
+    print("---------------------------------------------------------")
+    print("Here are your statistics")
+    for product, details in product_added.items():
+        products_added += details['quantity']
+        total += float((details['price'] * details['quantity']))
+    print(f"The total value of the inventory is: {total}")
+    print(f"The total number of products in the inventory is: {products_added}") 
+    print("---------------------------------------------------------")
+    return
