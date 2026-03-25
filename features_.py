@@ -1,5 +1,6 @@
 import csv
 import os
+global inventory
 inventory = {}
 products_added = {}
 def validate_input_product_name(user_input):
@@ -70,42 +71,39 @@ def add_product(): #This funcition add a new product
             "price": Producto_price,
             "quantity": quantity,
         }
-
-
-        inventory = product_added_to_saved
-        # CSV file name
-        csv_filename = "inventory.csv"
-        # Define the field names (headers)
-        fieldnames = ["name", "price", "quantity"]
-        # Writing to CSV
-        with open(csv_filename, mode='a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            size = os.path.getsize("inventory.csv")
-            if size == 0:
-                writer.writeheader()  # Write header row
-            writer.writerow(inventory)  # Write data rows
+        inventory.update(product_added_to_saved)
+        print("Product added succesfullly")
         return 
-    
     except ValueError:
         print("ERROR: Please enter valid numeric values for price and quantity.")
-                                    
+
+
+
+def save_csv(): #function #7
+    # CSV file name
+    csv_filename = "inventory.csv"
+    # Define the field names (headers)
+    fieldnames = ["name", "price", "quantity"]
+    # Writing to CSV
+    with open(csv_filename, mode='a', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        size = os.path.getsize("inventory.csv")
+        if size == 0:
+            writer.writeheader()  # Write header row
+        writer.writerow(inventory)  # Write data rows
+    print("CSV file is saved succesfully")
+    return 
+
 def inventory_print():
     total_records = {}
     total_records.update(inventory)
-    
-    
-    with open('inventory.csv', mode ='r') as file:    
-        csvFile = csv.DictReader(file)
-        print("Here are your inventory")
-        for lines in csvFile:
-            print(f"Product name: {lines['name']}")
-            print(f"Product price: {lines['price']}")
-            print(f"Product quantity: {lines['quantity']}")
-            print("---------------------------------------------------------")
-
-            
-
-    
+    print("---------------------------------------------------------")
+    print("Here are your inventory")
+    for product, details in total_records.items():
+        print(f"Product: {product}")
+        print(f"  Price: {details['price']}")
+        print(f"  Quantity: {details['quantity']}")
+    print("---------------------------------------------------------")
     print("---------------------------------------------------------")
     print("Exiting the inventory management system.")
     return

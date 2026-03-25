@@ -11,6 +11,7 @@ def menu():
     print("2- Print inventory")
     print("3- Calculate statistics")
     print("4- Exit")
+    print("7- Save information in CSV")
     print("=" * 40)
     print()
     while validator:
@@ -27,6 +28,8 @@ def menu():
             print("Thanks for using our system! Have a great day!")
             print("-----------------------------------------------")
             validator =  False
+        elif Ejecucion == 7:
+            features_.save_csv()
         else:
             print("Option not valid")
 
