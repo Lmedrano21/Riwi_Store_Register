@@ -1,6 +1,7 @@
+import csv
+import os
 inventory = {}
 products_added = {}
-
 def validate_input_product_name(user_input):
     while user_input.strip() == "":
         print("ERROR: Product name cannot be empty. Please enter a valid product name.")
@@ -57,7 +58,6 @@ def validate_input_quantity(user_input):
                    
 def add_product(): #This funcition add a new product
     try:    
-        product_added = {}
         producto_name = input("Enter the name of the product: ")
         producto_name = validate_input_product_name(producto_name)
         Producto_price = input("Enter the price of the product: ")
@@ -65,28 +65,52 @@ def add_product(): #This funcition add a new product
         quantity = input("Enter the quantity: ")
         quantity = validate_input_quantity(quantity)
         
-        product_added[producto_name] = {
+        product_added_to_saved= {
+            "name": producto_name,
             "price": Producto_price,
             "quantity": quantity,
         }
-        products_added.update(product_added)
-        return product_added
+
+
+        inventory = product_added_to_saved
+        # CSV file name
+        csv_filename = "inventory.csv"
+        # Define the field names (headers)
+        fieldnames = ["name", "price", "quantity"]
+        # Writing to CSV
+        with open(csv_filename, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            size = os.path.getsize("inventory.csv")
+            if size == 0:
+                writer.writeheader()  # Write header row
+            writer.writerow(inventory)  # Write data rows
+        return 
+    
     except ValueError:
         print("ERROR: Please enter valid numeric values for price and quantity.")
                                     
 def inventory_print():
     total_records = {}
     total_records.update(inventory)
-    print("---------------------------------------------------------")
-    print("Here are your inventory")
-    for product, details in total_records.items():
-        print(f"Product: {product}")
-        print(f"  Price: {details['price']}")
-        print(f"  Quantity: {details['quantity']}")
-    print("---------------------------------------------------------")
+    
+    
+    with open('inventory.csv', mode ='r') as file:    
+        csvFile = csv.DictReader(file)
+        print("Here are your inventory")
+        for lines in csvFile:
+            print(f"Product name: {lines['name']}")
+            print(f"Product price: {lines['price']}")
+            print(f"Product quantity: {lines['quantity']}")
+            print("---------------------------------------------------------")
+
+            
+
+    
     print("---------------------------------------------------------")
     print("Exiting the inventory management system.")
     return
+
+
 def calculate_statistics():
     total = 0
     products_added_total = 0

@@ -17,7 +17,7 @@ def menu():
         Ejecucion = int(input("Choose an option: "))
         if Ejecucion == 1:
             print("Add new product")
-            inventory.update(features_.add_product())
+            features_.add_product()
         elif Ejecucion == 2:
             features_.inventory_print()
         elif Ejecucion == 3:
