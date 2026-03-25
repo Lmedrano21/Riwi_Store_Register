@@ -101,3 +101,5 @@ def calculate_statistics():
     print(f"The total number of products in the inventory is: {products_added_total}") 
     print("---------------------------------------------------------")
     return
+
+
