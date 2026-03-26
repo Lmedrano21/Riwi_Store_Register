@@ -1,8 +1,12 @@
 import csv
 import os
-global inventory
+global inventory, inventory_for_csv, inventory_from_csv
 inventory = {}
+inventory_for_csv = {}
+inventory_from_csv = {}
 products_added = {}
+
+
 def validate_input_product_name(user_input):
     while user_input.strip() == "":
         print("ERROR: Product name cannot be empty. Please enter a valid product name.")
@@ -58,6 +62,7 @@ def validate_input_quantity(user_input):
             user_input = input("Enter the quantity sold: ")                 
                    
 def add_product(): #This funcition add a new product
+    product_added_to_saved={}
     try:    
         producto_name = input("Enter the name of the product: ")
         producto_name = validate_input_product_name(producto_name)
@@ -66,12 +71,19 @@ def add_product(): #This funcition add a new product
         quantity = input("Enter the quantity: ")
         quantity = validate_input_quantity(quantity)
         
-        product_added_to_saved= {
+        product_added_to_saved[producto_name]= {
             "name": producto_name,
             "price": Producto_price,
             "quantity": quantity,
         }
         inventory.update(product_added_to_saved)
+                
+        product_added_to_saved_csv= {
+            "name": producto_name,
+            "price": Producto_price,
+            "quantity": quantity,
+        }
+        inventory_for_csv.update(product_added_to_saved_csv)
         print("Product added succesfullly")
         return 
     except ValueError:
@@ -86,11 +98,11 @@ def save_csv(): #function #7
     fieldnames = ["name", "price", "quantity"]
     # Writing to CSV
     with open(csv_filename, mode='a', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(file, fieldnames=fieldnames, extrasaction='ignore')
         size = os.path.getsize("inventory.csv")
         if size == 0:
             writer.writeheader()  # Write header row
-        writer.writerow(inventory)  # Write data rows
+        writer.writerow(inventory_for_csv)  # Write data rows
     print("CSV file is saved succesfully")
     return 
 
