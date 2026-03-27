@@ -1,0 +1,14 @@
+name,price,quantity
+moto,40.0,499
+impresora,10.0,5
+libros,20.0,1
+carpeta,25.0,2
+cuaderno,102.0,2
+lapicero,1000.0,10
+,50.0,3
+mesa,-20.0,2
+lapiz,abc,10
+silla,30.0,-5
+monitor,40.0
+teclado, ,4
+mouse,25.0,2,extra

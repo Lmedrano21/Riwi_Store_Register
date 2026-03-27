@@ -21,19 +21,26 @@ def menu():
     while validator:
         Ejecucion = int(input("Choose an option: "))
         if Ejecucion == 1:
-            print("Add new product")
             features_.add_product()
         elif Ejecucion == 2:
             features_.inventory_print()
         elif Ejecucion == 3:
-            features_.calculate_statistics()
+             features_.search_producto()
         elif Ejecucion == 4:
+            features_.product_update()
+        elif Ejecucion == 5:
+            features_.product_delete()
+        elif Ejecucion == 6:
+            features_.calculate_statistics()
+        elif Ejecucion == 7:
+            features_.save_csv()
+        elif Ejecucion == 8:
+            features_.upload_inventory_csv()
+        elif Ejecucion == 9:
             print("-----------------------------------------------")
             print("Thanks for using our system! Have a great day!")
             print("-----------------------------------------------")
             validator =  False
-        elif Ejecucion == 7:
-            features_.save_csv()
         else:
             print("Option not valid")
 

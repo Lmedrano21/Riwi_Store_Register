@@ -6,7 +6,6 @@ inventory_for_csv = {}
 inventory_from_csv = {}
 products_added = {}
 
-
 def validate_input_product_name(user_input):
     while user_input.strip() == "":
         print("ERROR: Product name cannot be empty. Please enter a valid product name.")
@@ -89,8 +88,6 @@ def add_product(): #This funcition add a new product
     except ValueError:
         print("ERROR: Please enter valid numeric values for price and quantity.")
 
-
-
 def save_csv(): #function #7
     # CSV file name
     csv_filename = "inventory.csv"
@@ -120,7 +117,20 @@ def inventory_print():
     print("Exiting the inventory management system.")
     return
 
+def search_producto():
+    name_to_search = input("Please input the name's product to search: ")
 
+    producto_info = inventory.get(name_to_search)
+    if producto_info:
+        print(f"Information: ")
+        print(f"Name: {producto_info['name']}")
+        print(f"Price: {producto_info['price']}")
+        print(f"Quantity: {producto_info['quantity']}")
+        print("---------------------------------------------------------")
+    else:
+        print(f"The product '{name_to_search}' is not found, please try again.")
+        print("---------------------------------------------------------")
+        
 def calculate_statistics():
     total = 0
     products_added_total = 0
@@ -136,4 +146,109 @@ def calculate_statistics():
     print("---------------------------------------------------------")
     return
 
+def product_update():
+    name_to_search = input("Please input the name's product to update: ")
 
+    producto_info = inventory.get(name_to_search)
+    
+    if not producto_info:
+        print(f" Product '{producto_info['name']}' not found.")
+        return 
+    
+
+    print(f"\nUpdate: {producto_info['name']} (Price: {producto_info['price']}, Stock: {producto_info['quantity']})")
+    print("1. Change Price")
+    print("2. Change Stock")
+    print("3. Change Both")
+    
+    option = input("Choose an option: ")
+
+    if option == "1":
+        producto_info["price"] = float(input("New price: "))
+    elif option == "2":
+        producto_info["quantity"] = int(input("New stock: "))
+    elif option == "3":
+        producto_info["price"] = float(input("New price: "))
+        producto_info["quantity"] = int(input("New stock: "))
+    else:
+        print("Invalid option.")
+        
+    print(" Update successful.")
+    return 
+
+def product_delete():
+    name = input("Enter the name of the product you wish to delete: ")
+    if name in inventory:
+        confirmar = input(f" Are you sure you want to delete '{name}'? (Yes/No): ").lower()
+        
+        if confirmar == 'yes':
+            del inventory[name]
+            print(f" The product '{name}' has been successfully deleted.")
+            return 
+        else:
+            print(" Operation cancelled by the user")
+            return 
+    else:
+        print(f" Error: The product '{name}' does not exist in the inventory.")
+        return 
+
+
+def upload_inventory_csv(route="new_inventory.csv"):
+    invalid_rows = 0
+    csv_data = {} # Usamos un dict temporal para los nuevos datos
+    
+    try:
+        with open(route, 'r', encoding='utf-8') as csvfile:
+            result = csv.reader(csvfile)
+            try:
+                header = next(result)
+            except StopIteration:
+                print("The file is empty.")
+                return
+
+            if header != ['name', 'price', 'quantity']:
+                print("The CSV header is invalid. Expected: name, price, quantity")
+                return
+
+            for fila in result:
+                # Validar que existan las 3 columnas y no estén vacías
+                if len(fila) == 3 and all(item.strip() for item in fila):
+                    try:
+                        name = fila[0].strip()
+                        price = float(fila[1])
+                        quantity = int(fila[2])
+
+                        if price > 0 and quantity > 0:
+                            csv_data[name] = {'price': price, 'quantity': quantity}
+                        else:
+                            invalid_rows += 1
+                    except ValueError:
+                        invalid_rows += 1
+                else:
+                    invalid_rows += 1
+                    
+        if not csv_data:
+            print("No valid data was found to load.")
+            return
+
+        while True:
+            option = input("\nDo you want to overwrite the entire current inventory? (Y/N): ").strip().upper()
+            if option in ["Y", "N"]:
+                break
+            print("Please input: Y o N.")
+
+        if option == "Y":
+            inventory.clear()
+            inventory.update(csv_data)
+        else:
+            # Actualiza lo existente y agrega lo nuevo sin borrar el resto
+            for name, data in csv_data.items():
+                inventory[name] = data
+
+        print("\nData successfully loaded.")
+        print(f"Invalid rows omitted: {invalid_rows}\n")
+
+    except FileNotFoundError:
+        print("File no found.")
+
+                      
