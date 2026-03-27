@@ -98,7 +98,7 @@ def save_csv(): #function #7
         writer = csv.DictWriter(file, fieldnames=fieldnames, extrasaction='ignore')
         size = os.path.getsize("inventory.csv")
         if size == 0:
-            writer.writeheader()  # Write header row
+            writer.writeheader()  # Write header row0
         writer.writerow(inventory_for_csv)  # Write data rows
     print("CSV file is saved succesfully")
     return 
