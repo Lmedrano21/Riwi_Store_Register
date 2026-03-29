@@ -39,7 +39,13 @@ def menu():
     # Start a loop that continues while validator is True
     while validator:
         # Ask user to enter their choice and convert it to an integer
-        Ejecucion = int(input("Choose an option: "))
+        
+        try:
+            print("---------------------------------------------------------")
+            Ejecucion = int(input("Choose an option: "))
+        except ValueError:
+            print("Please enter a valid option.")
+            continue
         # Check if user chose option 1
         if Ejecucion == 1:
             # Call the add_product function to add a new product

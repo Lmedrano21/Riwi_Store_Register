@@ -1,14 +1,15 @@
 name,price,quantity
-moto,40.0,499
-impresora,10.0,5
-libros,20.0,1
-carpeta,25.0,2
-cuaderno,102.0,2
-lapicero,1000.0,10
-,50.0,3
-mesa,-20.0,2
-lapiz,abc,10
-silla,30.0,-5
-monitor,40.0
-teclado, ,4
-mouse,25.0,2,extra
+automovil,15000.0,3
+bicicleta,250.0,15
+motocicleta,3500.0,8
+camion,45000.0,2
+scooter,120.0,20
+furgoneta,22000.0,4
+patines,0.0,10
+remolque,5000.0,-1
+autobus,85000.0,1
+avion,1200000.0,precio_invalido
+helicoptero,950000.0
+barco,300000.0,2,blanco
+taller, ,5
+llantas,85.0,40

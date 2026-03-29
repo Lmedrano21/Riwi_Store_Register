@@ -164,9 +164,12 @@ def add_product():
         # Add the product to the list that will be saved to CSV
         inventory_for_csv.append(product_added_to_saved_csv)
         # Display the current list of items to be saved (for debugging)
-        print(inventory_for_csv)
+        for key, product in product_added_to_saved.items():
+            print("---------------------------------------------------------")
+            print(f"Product to save: {product['name']}, Price: {product['price']}, Quantity: {product['quantity']}")
         # Tell user that the product was added successfully
-        print("Product added succesfullly")
+        print("Product added successfully")
+        print("---------------------------------------------------------")
         # Exit the function
         return
     # Handle any value errors if invalid data is entered
@@ -227,11 +230,7 @@ def inventory_print():
         print(f"  Quantity: {details['quantity']}")
     # Print a divider line for visual separation
     print("---------------------------------------------------------")
-    # Print another divider line
-    print("---------------------------------------------------------")
-    # Print a message
-    print("Exiting the inventory management system.")
-    # Exit the function
+
     return
 
 # Define the function to search for a specific product in inventory
